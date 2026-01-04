@@ -1,73 +1,208 @@
-# Welcome to your Lovable project
+# Bharat Bhumi Portal
 
-## Project info
+A comprehensive land management system for government operations with modern frontend and robust backend infrastructure.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## 🚀 Project Overview
 
-## How can I edit this code?
+Bharat Bhumi Portal is a full-stack web application designed for efficient land record management, user authentication, and administrative dashboard operations. The system provides secure access to land records, search functionality, and comprehensive user management.
 
-There are several ways of editing your application.
+## 🛠️ Technologies Used
 
-**Use Lovable**
+### Frontend
+- **React** with TypeScript
+- **Vite** - Fast build tool
+- **Tailwind CSS** - Utility-first styling
+- **shadcn-ui** - Modern UI components
+- **React Router** - Client-side routing
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+### Backend
+- **Python 3.10+**
+- **FastAPI** - High-performance async API framework
+- **MongoDB** - NoSQL database
+- **Motor** - Async MongoDB driver
+- **Pydantic** - Data validation
+- **JWT** - Secure authentication
+- **Bcrypt** - Password hashing
 
-Changes made via Lovable will be committed automatically to this repo.
+## 📋 Prerequisites
 
-**Use your preferred IDE**
+- Node.js 16+ and npm
+- Python 3.10+
+- MongoDB 4.0+ (or MongoDB Atlas account)
+- Git
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## 🔧 Installation & Setup
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### 1. Clone the Repository
 
-Follow these steps:
+```bash
+git clone https://github.com/thedevz43/Land.git
+cd Land
+```
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### 2. Frontend Setup
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+```bash
+# Install dependencies
+npm install
 
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+The frontend will run on `http://localhost:5173`
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### 3. Backend Setup
 
-**Use GitHub Codespaces**
+```bash
+# Navigate to backend directory
+cd backend
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+# Create virtual environment
+python -m venv venv
 
-## What technologies are used for this project?
+# Activate virtual environment
+# On Windows:
+.\venv\Scripts\activate
+# On macOS/Linux:
+source venv/bin/activate
 
-This project is built with:
+# Install dependencies
+pip install -r requirements.txt
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+# Start the backend server
+uvicorn main:app --reload --host 0.0.0.0 --port 8000
+```
 
-## How can I deploy this project?
+The backend API will run on `http://localhost:8000`
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+### 4. MongoDB Setup
 
-## Can I connect a custom domain to my Lovable project?
+**Option A: Local MongoDB**
+```bash
+# Windows (as Administrator)
+net start MongoDB
 
-Yes, you can!
+# Or run manually
+mongod --dbpath C:\data\db
+```
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+**Option B: MongoDB Atlas (Cloud)**
+1. Create free account at [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
+2. Create a cluster and get connection string
+3. Update `backend/database/mongodb.py` with your connection string
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+### 5. Add Test Data (Optional)
+
+```bash
+cd backend
+python add_test_data.py
+```
+
+This creates sample users and land records for testing.
+
+## 📚 API Documentation
+
+Once the backend is running, visit:
+- **Swagger UI**: http://localhost:8000/docs
+- **ReDoc**: http://localhost:8000/redoc
+
+### Available Endpoints
+
+**Authentication**
+- `POST /auth/register` - Register new user
+- `POST /auth/login` - User login (returns JWT token)
+
+**Land Management**
+- `POST /land/add` - Add new land record
+- `GET /land/search?location=...` - Search lands by location
+- `GET /land/{land_id}` - Get specific land details
+- `PUT /land/{land_id}` - Update land record
+- `DELETE /land/{land_id}` - Delete land record
+
+**Dashboard**
+- `GET /dashboard/` - Get dashboard statistics
+
+## 📁 Project Structure
+
+```
+bharat-bhumi-portal/
+├── backend/
+│   ├── database/
+│   │   └── mongodb.py          # MongoDB connection
+│   ├── models/
+│   │   ├── user.py             # User data models
+│   │   ├── land.py             # Land data models
+│   │   └── dashboard.py        # Dashboard models
+│   ├── routes/
+│   │   ├── auth.py             # Authentication routes
+│   │   ├── land.py             # Land CRUD routes
+│   │   └── dashboard.py        # Dashboard routes
+│   ├── utils/
+│   │   └── auth.py             # Auth utilities (JWT, hashing)
+│   ├── main.py                 # FastAPI application
+│   ├── requirements.txt        # Python dependencies
+│   └── add_test_data.py        # Test data script
+├── src/
+│   ├── components/             # React components
+│   ├── pages/                  # Page components
+│   ├── layouts/                # Layout components
+│   ├── context/                # React context
+│   └── utils/                  # Utility functions
+├── public/                     # Static assets
+└── package.json                # Node dependencies
+```
+
+## 🔒 Security Notes
+
+- Update `SECRET_KEY` in `backend/utils/auth.py` for production
+- Use environment variables for sensitive data
+- Enable HTTPS in production
+- Configure CORS properly for your domain
+
+## 🗄️ Database Collections
+
+**users**
+- username (string)
+- email (string)
+- hashed_password (string)
+
+**lands**
+- land_id (string)
+- owner (string)
+- location (string)
+- area (number)
+- details (string)
+
+## 🚀 Deployment
+
+### Frontend
+```bash
+npm run build
+```
+Deploy the `dist` folder to any static hosting service (Vercel, Netlify, etc.)
+
+### Backend
+- Deploy to services like Railway, Render, or AWS
+- Ensure MongoDB connection string is configured via environment variables
+- Set up proper environment variables for production
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📝 License
+
+This project is open source and available under the MIT License.
+
+## 👨‍💻 Developer
+
+Created and maintained by [thedevz43](https://github.com/thedevz43)
+
+## 🐛 Issues
+
+Found a bug? Please open an issue on [GitHub Issues](https://github.com/thedevz43/Land/issues)
