@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, status, Depends
-from backend.models.user import User, UserLogin
-from backend.utils.auth import get_password_hash, verify_password, create_access_token
-from backend.database.mongodb import get_db
+from models.user import User, UserLogin
+from utils.auth import get_password_hash, verify_password, create_access_token
+from database.mongodb import get_db
 from motor.motor_asyncio import AsyncIOMotorDatabase
 
 router = APIRouter()

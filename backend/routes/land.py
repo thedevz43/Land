@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
-from backend.models.land import Land
-from backend.database.mongodb import get_db
+from models.land import Land
+from database.mongodb import get_db
 from motor.motor_asyncio import AsyncIOMotorDatabase
 
 router = APIRouter()

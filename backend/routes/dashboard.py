@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends
-from backend.database.mongodb import get_db
+from database.mongodb import get_db
 from motor.motor_asyncio import AsyncIOMotorDatabase
 
 router = APIRouter()
